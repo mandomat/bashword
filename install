@@ -1,0 +1,22 @@
+#!/bin/bash
+
+home=$HOME
+db="$home/.bashword/bashword_db"
+#key="$home/.bashword/bashword_key"
+
+if [ ! -e "$db.enc" ] #|| [ ! -e "$key" ]
+then
+    mkdir -p "$home/.bashword"
+    touch  "$home/.bashword/bashword_db"
+    cp bashword "$home/.bashword/bashword"
+    chmod u+x "$home/.bashword/bashword"
+    echo "alias bashword=$home/.bashword/bashword" >> "$home/.profile"
+    source "$home/.profile"
+    echo "DB has been generated in the default bashword location."
+    read -p "Provide a password:" db_password
+    openssl enc -aes-256-cbc -salt -in "$db" -out "$db.enc" -pass pass:"$db_password"
+    echo "The DB has been succesfully encrypted."
+    rm "$db"
+else
+  echo "Seems bashword is already installed. Delete bashword folder $home/.bashword if you want to reinstall it."
+fi
