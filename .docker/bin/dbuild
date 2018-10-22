@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+REGISTRY='localhost'
+DBNAME=${DBNAME:-testdb}
+
+IMG=$(echo ${PWD##*/} | tr '[:upper:]' '[:lower:]')
+TAG=$((dpkg --print-architecture 2>/dev/null || arch 2>/dev/null) || echo -n "localdev")
+VER=$(git rev-parse --short HEAD 2>/dev/null || echo -n "nogit")
+
+RANDOM_PASS="${RANDOM_PASS:-$(cat /dev/urandom | head -1 | base64 | tr -d '\n' | cut -c1-32)}"
+PWD=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+
+# check Dockerfiles
+DOCKERFILE=".docker/Dockerfile.${TAG}"
+[[ ! -e ${DOCKERFILE} ]] && DOCKERFILE=".docker/Dockerfile"
+
+
+cd ${PWD}
+echo -e "\nBUILDING NEW BASHWORD DB $DBNAME WITH KEY:\t$RANDOM_PASS\n"
+set -x
+docker build \
+	-f ${DOCKERFILE} \
+        -t "${REGISTRY}/${IMG}:${DBNAME}" \
+        ${@:-.}
+
+read -p "Start instance now?: " RESPONSE
+case $RESPONSE in
+	y|yes|Y|YES) docker run -d --restart=unless-stopped --name "${IMG}-${DBNAME}" --entrypoint /bin/bash "${REGISTRY}/${IMG}:${DBNAME}" /usr/local/bin/entrypoint.sh;;
+	n|no|N|NO) echo "Instance created";;
+esac
