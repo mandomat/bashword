@@ -2,7 +2,7 @@ HOME='/opt'
 BASHWORD_DB="$HOME/bashword.db" \
 BASHWORD_KEY="$HOME/bashword.key"
 BASHWORD_DB_KEY
-
+: '
 ./bashword.sh /usr/local/bin/
 
 
@@ -14,3 +14,4 @@ BASHWORD_DB_KEY
                 openssl enc -aes-256-cbc -salt -in "$BASHWORD_DB" -out "$BASHWORD_DB.enc" -pass pass:"$BASHWORD_DB_KEY"; \
                 rm $BASHWORD_DB; \
         fi
+'
