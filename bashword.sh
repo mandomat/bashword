@@ -7,8 +7,6 @@ then
   mkdir -p "$home/.bashword"
   touch  "$home/.bashword/bashword_db"
 
-	chmod +x /usr/local/bin/bw
-
 	echo " * DB has been generated in $home/.bashword *"
   read -p "Provide a password (make sure to remember it):" db_password
   openssl enc -aes-256-cbc -salt -in "$BASHWORD_DB" -out "$BASHWORD_DB.enc" -pass pass:"$db_password"
