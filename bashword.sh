@@ -8,7 +8,7 @@ then
   touch  "$home/.bashword/bashword_db"
 
 	echo " * DB has been generated in $home/.bashword *"
-  read -p "Provide a password (make sure to remember it):" db_password
+  read -r -s -p  "Provide a password (make sure to remember it):" db_password
   openssl enc -aes-256-cbc -salt -in "$BASHWORD_DB" -out "$BASHWORD_DB.enc" -pass pass:"$db_password"
   echo "* The DB has been succesfully encrypted. *"
   rm "$BASHWORD_DB"
