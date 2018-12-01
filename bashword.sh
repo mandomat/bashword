@@ -24,9 +24,9 @@ function local_help {
 		bw ls
 	Extra:
 		bw  new|n -s [service] -p [password]
-		bw update|u -s [service] -p [password]
+		bw  update|u -s [service] -p [password]
 		bw  new|n -s [service] -l [length] #default length is 8
-
+    bw  update|u -s [service] -l [length]
 EOF
 }
 
