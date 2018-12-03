@@ -16,7 +16,6 @@ fi
 
 function local_help {
 	cat <<'EOF'
-
 	Usage:
 		bw new|n -s [service]
 		bw get|g -s [service]
@@ -25,8 +24,8 @@ function local_help {
 	Extra:
 		bw  new|n -s [service] -p [password]
 		bw  update|u -s [service] -p [password]
-		bw  new|n -s [service] -l [length] #default length is 8
-    bw  update|u -s [service] -l [length]
+		bw  new|n -s [service] -l [length]
+                bw update|u -s [service] -l [length]
 EOF
 }
 
@@ -35,7 +34,7 @@ function gen_pass {
 	if [[ -z "$length" ]]; then
 			echo | cat  /dev/urandom | head -10 | base64 | tr -d '\n'| cut -c1-8
 	else
-		echo | cat  /dev/urandom | head -1 | base64 |tr -d ' '| tr -d '\n'| cut -c1-"$length"
+		echo | cat  /dev/urandom | head -10 | base64 |tr -d ' '| tr -d '\n'| cut -c1-"$length"
 	fi
 }
 
