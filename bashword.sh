@@ -2,7 +2,7 @@
 home="$HOME"
 BASHWORD_DB="$HOME/.bashword/bashword_db"
 
-if [ ! -e "$BASHWORD_DB.enc" ]; then
+if [[ ! -e "$BASHWORD_DB.enc" ]]; then
 	mkdir -p "$home/.bashword";
 	touch  "$home/.bashword/bashword_db";
 	echo " * DB has been generated in $home/.bashword *";
@@ -128,7 +128,7 @@ while getopts s:p:l: option; do
 	esac
 done
 
-if [ -z "$service" ] && [ "$action" != "ls" ]; then
+if [[ -z "$service" ]] && [[ "$action" != "ls" ]]; then
 	echo "* No argument supplied";
 	local_help;
 fi
